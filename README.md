@@ -22,6 +22,24 @@ This project provides a modular, Python-based platform for analyzing financial n
    ```
 4. Configure environment variables in `.env` as needed.
 
+## Configuration
+
+Risk thresholds and sector mappings are now in `config/settings.py`:
+
+```python
+RISK_THRESHOLDS = {
+    "sentiment_critical": -0.7,
+    "risk_article_threshold": 0.3,
+    ...
+}
+SECTOR_KEYWORDS = {
+    "Technology": [...],
+    ...
+}
+```
+
+You can update these to tune the platform’s behavior.
+
 ## Usage
 - Extend the platform by adding new agents, models, or dashboards in the respective folders.
 - Use Streamlit for interactive dashboards.

@@ -57,7 +57,7 @@ def test_data_pipeline():
         print(f"❌ Economic data collection failed: {e}")
         return False
     print("✅ All data collection tests passed!")
-    return True
+    assert True
 
 if __name__ == "__main__":
     # Create data directories

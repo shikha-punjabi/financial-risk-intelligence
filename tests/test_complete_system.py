@@ -65,11 +65,11 @@ def test_complete_system():
         print("✅ Monitoring stopped")
         
         print("\n🎉 Complete system test passed!")
-        return True
+        assert True
         
     except Exception as e:
         print(f"❌ System test failed: {e}")
-        return False
+        assert False
 
 if __name__ == "__main__":
     test_complete_system()

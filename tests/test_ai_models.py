@@ -42,7 +42,7 @@ def test_ai_models():
         print()
     except Exception as e:
         print(f"❌ Sentiment analysis failed: {e}")
-        return False
+        assert False
     # Test LLM analyzer
     print("Testing Free LLM Analyzer...")
     try:
@@ -68,9 +68,9 @@ def test_ai_models():
         print()
     except Exception as e:
         print(f"❌ LLM analysis failed: {e}")
-        return False
+        assert False
     print("✅ All AI model tests passed!")
-    return True
+    assert True
 
 if __name__ == "__main__":
     test_ai_models()

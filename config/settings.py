@@ -36,6 +36,22 @@ class Config:
     RISK_ARTICLE_THRESHOLD = float(os.getenv('RISK_ARTICLE_THRESHOLD', 0.2))
     MAX_ALERTS_PER_HOUR = int(os.getenv('MAX_ALERTS_PER_HOUR', 10))
     
+    RISK_THRESHOLDS = {
+        "sentiment_critical": -0.7,
+        "risk_article_threshold": 0.3,
+        "sector_decline": -5,
+        "spy_daily_return": -3,
+        "vix_critical": 40,
+        "vix_high": 30,
+    }
+
+    SECTOR_KEYWORDS = {
+        'Technology': ['tech', 'software', 'apple', 'microsoft', 'google', 'amazon'],
+        'Financial': ['bank', 'finance', 'fed', 'interest', 'credit', 'loan'],
+        'Healthcare': ['health', 'pharma', 'drug', 'medical', 'biotech'],
+        'Energy': ['oil', 'gas', 'energy', 'renewable', 'solar', 'wind']
+    }
+    
     @classmethod
     def validate_keys(cls):
         missing_keys = []
