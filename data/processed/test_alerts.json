@@ -1,0 +1,38 @@
+[
+  {
+    "id": "SENTIMENT_20250619_165314",
+    "timestamp": "2025-06-19T16:53:14.358528",
+    "severity": "CRITICAL",
+    "category": "SENTIMENT",
+    "title": "Critical Negative Sentiment Detected",
+    "description": "6 articles with very negative sentiment found",
+    "affected_assets": [
+      "Financial"
+    ],
+    "recommended_actions": [
+      "Review portfolio exposure to mentioned sectors",
+      "Consider defensive positioning",
+      "Monitor for further developments"
+    ],
+    "confidence_score": 0.9,
+    "data_source": "news_sentiment",
+    "expiry_time": "2025-06-20T16:53:14.358528"
+  },
+  {
+    "id": "RISK_CONCENTRATION_20250619_165314",
+    "timestamp": "2025-06-19T16:53:14.359529",
+    "severity": "HIGH",
+    "category": "RISK_CONCENTRATION",
+    "title": "High Risk Article Concentration: 1.8%",
+    "description": "1 high-risk articles out of 57 total",
+    "affected_assets": [],
+    "recommended_actions": [
+      "Investigate specific risk factors",
+      "Review position sizing",
+      "Increase monitoring frequency"
+    ],
+    "confidence_score": 0.8,
+    "data_source": "news_risk_analysis",
+    "expiry_time": "2025-06-20T16:53:14.359529"
+  }
+]
