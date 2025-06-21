@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-# src/agents/portfolio_monitor.py
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -14,10 +10,7 @@ import json
 import asyncio
 from dataclasses import dataclass
 from enum import Enum
-<<<<<<< HEAD
 import os
-=======
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 
 from src.data.news_collector import NewsCollector
 from src.data.market_collector import MarketDataCollector
@@ -25,10 +18,7 @@ from src.data.economic_collector import EconomicDataCollector
 from src.models.free_sentiment_analyzer import FreeSentimentAnalyzer
 from src.models.free_llm_analyzer import FreeLLMAnalyzer
 from config.settings import Config
-<<<<<<< HEAD
 from src.agents.alert_utils import create_alert
-=======
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +60,6 @@ class PortfolioMonitoringAgent:
         self.active_alerts = []
         self.alert_history = []
         self.alert_callbacks = []
-<<<<<<< HEAD
         self.muted_alert_ids = set()
 
         # Monitoring configuration
@@ -84,20 +73,6 @@ class PortfolioMonitoringAgent:
             'volatility_threshold_critical': Config.VOLATILITY_THRESHOLD_CRITICAL,
             'risk_article_threshold': Config.RISK_ARTICLE_THRESHOLD,  # fraction
             'max_alerts_per_hour': Config.MAX_ALERTS_PER_HOUR
-=======
-        
-        # Monitoring configuration
-        self.config = {
-            'news_check_interval': 30,  # minutes
-            'market_check_interval': 5,   # minutes
-            'economic_check_interval': 60,  # minutes
-            'sentiment_threshold_high': -0.3,
-            'sentiment_threshold_critical': -0.5,
-            'volatility_threshold_high': 0.3,
-            'volatility_threshold_critical': 0.5,
-            'risk_article_threshold': 0.2,  # 20% of articles high risk
-            'max_alerts_per_hour': 10
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         }
         
         # Portfolio context (would be loaded from user data)
@@ -165,7 +140,6 @@ class PortfolioMonitoringAgent:
         """Check for news-based risks"""
         try:
             logger.info("🔍 Checking news risks...")
-<<<<<<< HEAD
             if self.last_checks['news'] == datetime.min:
                 hours_back = 24
             else:
@@ -195,35 +169,6 @@ class PortfolioMonitoringAgent:
         
         # High negative sentiment alert
         very_negative_articles = news_df[news_df['sentiment_score'] < Config.RISK_THRESHOLDS["sentiment_critical"]]
-=======
-            
-            # Collect recent news
-            hours_since_last = max(1, (datetime.now() - self.last_checks['news']).total_seconds() / 3600)
-            news_df = self.news_collector.get_financial_news(hours_back=int(hours_since_last) + 1)
-            
-            if news_df.empty:
-                logger.info("No new articles found")
-                return
-            
-            # Analyze sentiment
-            analyzed_news = self.sentiment_analyzer.analyze_news_batch(news_df)
-            
-            # Check for risk conditions
-            self._analyze_news_risks(analyzed_news)
-            
-            self.last_checks['news'] = datetime.now()
-            
-        except Exception as e:
-            logger.error(f"Error checking news risks: {e}")
-    
-    def _analyze_news_risks(self, news_df: pd.DataFrame):
-        """Analyze news for risk patterns"""
-        if news_df.empty:
-            return
-        
-        # High negative sentiment alert
-        very_negative_articles = news_df[news_df['sentiment_score'] < self.config['sentiment_threshold_critical']]
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         if len(very_negative_articles) > 0:
             self._create_alert(
                 severity=AlertSeverity.CRITICAL,
@@ -244,11 +189,7 @@ class PortfolioMonitoringAgent:
         high_risk_articles = news_df[news_df['risk_level'] == 'HIGH']
         risk_ratio = len(high_risk_articles) / len(news_df)
         
-<<<<<<< HEAD
         if risk_ratio > Config.RISK_THRESHOLDS["risk_article_threshold"]:
-=======
-        if risk_ratio > self.config['risk_article_threshold']:
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
             self._create_alert(
                 severity=AlertSeverity.HIGH,
                 category="RISK_CONCENTRATION",
@@ -271,7 +212,6 @@ class PortfolioMonitoringAgent:
         """Check for market-based risks"""
         try:
             logger.info("📈 Checking market risks...")
-<<<<<<< HEAD
             market_data = self.market_collector.get_comprehensive_market_snapshot()
             os.makedirs(Config.RAW_DATA_DIR, exist_ok=True)
             if market_data and 'market_data' in market_data:
@@ -286,23 +226,6 @@ class PortfolioMonitoringAgent:
             self.last_checks['market'] = datetime.now()
         except Exception as e:
             logger.error(f"Error checking market risks: {e}", exc_info=True)
-=======
-            
-            # Get market data
-            market_data = self.market_collector.get_comprehensive_market_snapshot()
-            
-            if not market_data['market_data']:
-                logger.warning("No market data available")
-                return
-            
-            # Analyze market risks
-            self._analyze_market_risks(market_data)
-            
-            self.last_checks['market'] = datetime.now()
-            
-        except Exception as e:
-            logger.error(f"Error checking market risks: {e}")
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     
     def _analyze_market_risks(self, market_data: Dict):
         """Analyze market data for risk patterns"""
@@ -370,7 +293,6 @@ class PortfolioMonitoringAgent:
         """Check for economic indicator risks"""
         try:
             logger.info("🏛️ Checking economic risks...")
-<<<<<<< HEAD
             econ_summary = self.econ_collector.get_economic_summary()
             os.makedirs(Config.RAW_DATA_DIR, exist_ok=True)
             if econ_summary and 'data_date' in econ_summary:
@@ -385,23 +307,6 @@ class PortfolioMonitoringAgent:
             self.last_checks['economic'] = datetime.now()
         except Exception as e:
             logger.error(f"Error checking economic risks: {e}", exc_info=True)
-=======
-            
-            # Get economic summary
-            econ_summary = self.econ_collector.get_economic_summary()
-            
-            if 'error' in econ_summary:
-                logger.warning(f"Economic data error: {econ_summary['error']}")
-                return
-            
-            # Analyze economic risks
-            self._analyze_economic_risks(econ_summary)
-            
-            self.last_checks['economic'] = datetime.now()
-            
-        except Exception as e:
-            logger.error(f"Error checking economic risks: {e}")
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     
     def _analyze_economic_risks(self, econ_summary: Dict):
         """Analyze economic indicators for risks"""
@@ -475,18 +380,7 @@ class PortfolioMonitoringAgent:
                 text = f"{row['title']} {row['description']}".lower()
                 
                 for sector in self.portfolio_context['sectors']:
-<<<<<<< HEAD
                     keywords = Config.SECTOR_KEYWORDS.get(sector, [])
-=======
-                    sector_keywords = {
-                        'Technology': ['tech', 'software', 'apple', 'microsoft', 'google', 'amazon'],
-                        'Financial': ['bank', 'finance', 'fed', 'interest', 'credit', 'loan'],
-                        'Healthcare': ['health', 'pharma', 'drug', 'medical', 'biotech'],
-                        'Energy': ['oil', 'gas', 'energy', 'renewable', 'solar', 'wind']
-                    }
-                    
-                    keywords = sector_keywords.get(sector, [])
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
                     if any(keyword in text for keyword in keywords):
                         if sector not in sector_news:
                             sector_news[sector] = []
@@ -518,11 +412,7 @@ class PortfolioMonitoringAgent:
                     )
                     
         except Exception as e:
-<<<<<<< HEAD
             logger.error(f"Error in sector risk analysis: {e}", exc_info=True)
-=======
-            logger.error(f"Error in sector risk analysis: {e}")
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     
     def _extract_affected_assets(self, news_df: pd.DataFrame) -> List[str]:
         """Extract affected assets from news articles"""
@@ -549,47 +439,8 @@ class PortfolioMonitoringAgent:
                      description: str, affected_assets: List[str], 
                      recommended_actions: List[str], confidence_score: float, 
                      data_source: str):
-<<<<<<< HEAD
         """Centralized alert creation using alert_utils.create_alert"""
         create_alert(self, severity, category, title, description, affected_assets, recommended_actions, confidence_score, data_source)
-=======
-        """Create and manage alerts"""
-        
-        # Check rate limiting
-        recent_alerts = [a for a in self.alert_history 
-                        if a.timestamp > datetime.now() - timedelta(hours=1)]
-        
-        if len(recent_alerts) >= self.config['max_alerts_per_hour']:
-            logger.warning("Alert rate limit reached, skipping alert creation")
-            return
-        
-        # Create alert
-        alert_id = f"{category}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        
-        alert = Alert(
-            id=alert_id,
-            timestamp=datetime.now(),
-            severity=severity,
-            category=category,
-            title=title,
-            description=description,
-            affected_assets=affected_assets,
-            recommended_actions=recommended_actions,
-            confidence_score=confidence_score,
-            data_source=data_source,
-            expiry_time=datetime.now() + timedelta(hours=24)  # Alerts expire in 24 hours
-        )
-        
-        # Check for duplicate alerts
-        if not self._is_duplicate_alert(alert):
-            self.active_alerts.append(alert)
-            self.alert_history.append(alert)
-            
-            logger.info(f"🚨 {severity.value} Alert Created: {title}")
-            
-            # Trigger callbacks
-            self._trigger_alert_callbacks(alert)
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     
     def _is_duplicate_alert(self, new_alert: Alert) -> bool:
         """Check if alert is duplicate of recent alert"""
@@ -621,7 +472,6 @@ class PortfolioMonitoringAgent:
         """Add callback function for alerts"""
         self.alert_callbacks.append(callback)
     
-<<<<<<< HEAD
     def mute_alert(self, alert_id: str):
         """Mute/acknowledge an alert by ID"""
         self.muted_alert_ids.add(alert_id)
@@ -639,13 +489,6 @@ class PortfolioMonitoringAgent:
         """Get currently muted alerts"""
         return [a for a in self.active_alerts if a.id in self.muted_alert_ids]
 
-=======
-    def get_active_alerts(self) -> List[Alert]:
-        """Get current active alerts"""
-        self._cleanup_expired_alerts()
-        return sorted(self.active_alerts, key=lambda x: x.timestamp, reverse=True)
-    
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     def get_alert_summary(self) -> Dict:
         """Get summary of current alert status"""
         active = self.get_active_alerts()
@@ -687,7 +530,6 @@ class PortfolioMonitoringAgent:
             json.dump(alerts_data, f, indent=2)
         
         logger.info(f"Saved {len(alerts_data)} alerts to {filepath}")
-<<<<<<< HEAD
         return filepath
 
 if __name__ == "__main__":
@@ -698,6 +540,3 @@ if __name__ == "__main__":
     agent._check_market_risks()
     agent._check_economic_risks()
     print("Done. Check data/raw/ for output files.")
-=======
-        return filepath
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)

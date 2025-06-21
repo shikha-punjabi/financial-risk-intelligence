@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-# src/data/market_collector.py
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -36,7 +32,6 @@ class MarketDataCollector:
             'XLRE': 'Real Estate'
         }
     
-<<<<<<< HEAD
     def get_market_data(self, symbols: List[str], period: str = "1mo", retries: int = 3) -> Dict:
         """Get market data with error handling and retries"""
         market_data = {}
@@ -85,58 +80,6 @@ class MarketDataCollector:
             sample_symbol = list(market_data.keys())[0]
             print(f"[MarketDataCollector] Sample data for {sample_symbol}:")
             print(market_data[sample_symbol])
-=======
-    def get_market_data(self, symbols: List[str], period: str = "1mo") -> Dict:
-        """Get market data with error handling"""
-        market_data = {}
-        
-        for symbol in symbols:
-            try:
-                logger.info(f"Fetching data for {symbol}")
-                ticker = yf.Ticker(symbol)
-                
-                # Get historical data
-                hist = ticker.history(period=period)
-                if hist.empty:
-                    logger.warning(f"No historical data for {symbol}")
-                    continue
-                
-                # Get basic info (handle missing fields)
-                try:
-                    info = ticker.info
-                except:
-                    info = {}
-                
-                # Calculate additional metrics
-                returns = hist['Close'].pct_change().dropna()
-                volatility = returns.std() * np.sqrt(252) if len(returns) > 1 else 0
-                
-                market_data[symbol] = {
-                    'price_data': hist,
-                    'current_price': hist['Close'].iloc[-1] if not hist.empty else None,
-                    'market_cap': info.get('marketCap', 0),
-                    'pe_ratio': info.get('trailingPE', None),
-                    'beta': info.get('beta', 1.0),
-                    'sector': info.get('sector', 'Unknown'),
-                    'industry': info.get('industry', 'Unknown'),
-                    'volatility': volatility,
-                    'returns': returns,
-                    'volume_avg': hist['Volume'].mean() if not hist.empty else 0,
-                    'last_updated': datetime.now().isoformat()
-                }
-                
-                # Add technical indicators
-                if not hist.empty:
-                    market_data[symbol].update(self._calculate_technical_indicators(hist))
-                
-                # Respect rate limits
-                time.sleep(0.1)
-                
-            except Exception as e:
-                logger.error(f"Error fetching data for {symbol}: {e}")
-                continue
-        
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         return market_data
     
     def _calculate_technical_indicators(self, price_data: pd.DataFrame) -> Dict:
@@ -267,8 +210,4 @@ class MarketDataCollector:
             json.dump(clean_data, f, indent=2)
         
         logger.info(f"Saved market data to {filepath}")
-<<<<<<< HEAD
         return filepath
-=======
-        return filepath
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)

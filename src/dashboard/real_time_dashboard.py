@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-# src/dashboard/real_time_dashboard.py
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
@@ -84,7 +80,6 @@ def load_recent_news():
 def render_alert_sidebar():
     """Render alerts in sidebar"""
     st.sidebar.header("🚨 Real-time Alerts")
-<<<<<<< HEAD
     agent = st.session_state.monitoring_agent
     if agent:
         show_muted = st.sidebar.checkbox("Show Muted Alerts", value=False)
@@ -93,12 +88,6 @@ def render_alert_sidebar():
             st.sidebar.info("Showing muted/acknowledged alerts")
         else:
             alerts = agent.get_active_alerts()
-=======
-    
-    if st.session_state.monitoring_agent:
-        alerts = st.session_state.monitoring_agent.get_active_alerts()
-        
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         if alerts:
             for alert in alerts[:5]:  # Show top 5 alerts
                 severity_colors = {
@@ -107,32 +96,18 @@ def render_alert_sidebar():
                     AlertSeverity.MEDIUM: "🟡",
                     AlertSeverity.LOW: "🟢"
                 }
-<<<<<<< HEAD
                 color = severity_colors.get(alert.severity, "⚪")
-=======
-                
-                color = severity_colors.get(alert.severity, "⚪")
-                
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
                 with st.sidebar.expander(f"{color} {alert.title}", expanded=alert.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]):
                     st.write(f"**Time:** {alert.timestamp.strftime('%H:%M:%S')}")
                     st.write(f"**Category:** {alert.category}")
                     st.write(f"**Description:** {alert.description}")
                     st.write(f"**Confidence:** {alert.confidence_score:.1%}")
-<<<<<<< HEAD
                     if alert.affected_assets:
                         st.write(f"**Affected:** {', '.join(alert.affected_assets)}")
-=======
-                    
-                    if alert.affected_assets:
-                        st.write(f"**Affected:** {', '.join(alert.affected_assets)}")
-                    
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
                     if alert.recommended_actions:
                         st.write("**Actions:**")
                         for action in alert.recommended_actions:
                             st.write(f"• {action}")
-<<<<<<< HEAD
                     # Mute/unmute button
                     if alert.id in agent.muted_alert_ids:
                         if st.button(f"Unmute {alert.id}", key=f"unmute_{alert.id}"):
@@ -144,10 +119,6 @@ def render_alert_sidebar():
                             st.experimental_rerun()
         else:
             st.sidebar.info("No active alerts" if not show_muted else "No muted alerts")
-=======
-        else:
-            st.sidebar.info("No active alerts")
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     else:
         st.sidebar.warning("Monitoring agent not initialized")
 
@@ -229,33 +200,6 @@ def render_main_dashboard():
             st.metric("News Sentiment", f"{avg_sentiment:.3f}",
                      delta="Positive" if avg_sentiment > 0 else "Negative")
         else:
-<<<<<<< HEAD
-            st.metric("News Sentiment", "N/A")
-    
-    with col4:
-        if not news_df.empty:
-            high_risk_count = (news_df['risk_level'] == 'HIGH').sum()
-            st.metric("High Risk Articles", f"{high_risk_count}")
-        else:
-            st.metric("High Risk Articles", "0")
-    
-    # Main content tabs
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Market Overview", "📰 News Analysis", "🚨 Risk Alerts", "📈 Portfolio Impact"])
-    
-    with tab1:
-        render_market_overview(market_data)
-    
-    with tab2:
-        render_news_analysis(news_df)
-    
-    with tab3:
-        render_risk_alerts()
-    
-    with tab4:
-        render_portfolio_impact(market_data, news_df)
-
-# ...existing code for render_market_overview, render_news_analysis, render_risk_alerts, render_portfolio_impact, main ...
-=======
            st.metric("News Sentiment", "N/A")
    
     with col4:
@@ -682,4 +626,3 @@ def main():
 
 if __name__ == "__main__":
    main()
->>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
