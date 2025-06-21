@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# src/data/news_collector.py
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import requests
 import pandas as pd
 import time
@@ -17,14 +21,20 @@ class NewsCollector:
         self.request_count = 0
         self.daily_limit = Config.NEWS_API_RATE_LIMIT
         
+<<<<<<< HEAD
     def _make_request(self, endpoint: str, params: dict, retries: int = 3) -> Optional[dict]:
         """Make API request with error handling, rate limiting, and retries"""
+=======
+    def _make_request(self, endpoint: str, params: dict) -> Optional[dict]:
+        """Make API request with error handling and rate limiting"""
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         if self.request_count >= self.daily_limit:
             logger.warning("Daily API limit reached")
             return None
             
         params['apiKey'] = self.api_key
         
+<<<<<<< HEAD
         attempt = 0
         while attempt < retries:
             try:
@@ -51,6 +61,32 @@ class NewsCollector:
         return None
     
     def get_financial_news(self, query: str = "financial markets", hours_back: int = 24) -> pd.DataFrame:
+=======
+        try:
+            response = requests.get(f"{self.base_url}/{endpoint}", params=params, timeout=30)
+            self.request_count += 1
+            
+            if response.status_code == 200:
+                return response.json()
+            elif response.status_code == 429:
+                logger.warning("Rate limit hit, waiting...")
+                time.sleep(60)
+                return self._make_request(endpoint, {k: v for k, v in params.items() if k != 'apiKey'})
+            else:
+                logger.error(f"API error: {response.status_code} - {response.text}")
+                return None
+                
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Request failed: {e}")
+            return None
+    
+    def get_financial_news(self, query: str = "financial markets", hours_back: int = 24) -> pd.DataFrame:
+        # Add rate limit check
+        if self.request_count >= self.daily_limit:
+            print(f"⚠️ Daily API limit reached ({self.daily_limit})")
+            return pd.DataFrame()
+    
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         """Get financial news with comprehensive error handling"""
         try:
             from_date = (datetime.now() - timedelta(hours=hours_back)).strftime('%Y-%m-%dT%H:%M:%S')
@@ -67,11 +103,18 @@ class NewsCollector:
             
             if not data or 'articles' not in data:
                 logger.warning("No articles returned from API")
+<<<<<<< HEAD
                 print("[NewsCollector] No articles returned from API")
+=======
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
                 return pd.DataFrame()
             
             articles = []
             for article in data['articles']:
+<<<<<<< HEAD
+=======
+                # Handle missing fields gracefully
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
                 articles.append({
                     'title': article.get('title', 'No Title'),
                     'description': article.get('description', 'No Description'),
@@ -84,6 +127,7 @@ class NewsCollector:
             
             df = pd.DataFrame(articles)
             
+<<<<<<< HEAD
             df = df.dropna(subset=['title', 'description'])
             df = df[df['title'] != '[Removed]']
             
@@ -95,6 +139,17 @@ class NewsCollector:
         except Exception as e:
             logger.error(f"Error collecting news: {e}", exc_info=True)
             print(f"[NewsCollector] Error collecting news: {e}")
+=======
+            # Data validation
+            df = df.dropna(subset=['title', 'description'])
+            df = df[df['title'] != '[Removed]']  # Filter out removed articles
+            
+            logger.info(f"Collected {len(df)} valid articles")
+            return df
+            
+        except Exception as e:
+            logger.error(f"Error collecting news: {e}")
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
             return pd.DataFrame()
     
     def get_company_specific_news(self, companies: List[str]) -> pd.DataFrame:
@@ -108,6 +163,10 @@ class NewsCollector:
                 company_news['target_company'] = company
                 all_news.append(company_news)
             
+<<<<<<< HEAD
+=======
+            # Respect rate limits
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
             time.sleep(1)
         
         return pd.concat(all_news, ignore_index=True) if all_news else pd.DataFrame()

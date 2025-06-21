@@ -1,9 +1,17 @@
+<<<<<<< HEAD
+=======
+# tests/test_ai_models.py
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 from src.models.free_sentiment_analyzer import FreeSentimentAnalyzer
 from src.models.free_llm_analyzer import FreeLLMAnalyzer
 import pandas as pd
 
 def test_ai_models():
     """Test AI models with sample data"""
+<<<<<<< HEAD
+=======
+    
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     # Sample financial news for testing
     sample_news = [
         {
@@ -22,12 +30,22 @@ def test_ai_models():
             'source': 'Wall Street Journal'
         }
     ]
+<<<<<<< HEAD
     sample_df = pd.DataFrame(sample_news)
+=======
+    
+    sample_df = pd.DataFrame(sample_news)
+    
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     # Test sentiment analyzer
     print("Testing Free Sentiment Analyzer...")
     try:
         sentiment_analyzer = FreeSentimentAnalyzer()
         analyzed_news = sentiment_analyzer.analyze_news_batch(sample_df)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         print("✅ Sentiment Analysis Results:")
         for idx, row in analyzed_news.iterrows():
             print(f"   Article {idx + 1}: {row['title'][:50]}...")
@@ -35,11 +53,16 @@ def test_ai_models():
             print(f"   Risk Level: {row['risk_level']}")
             print(f"   Confidence: {row['sentiment_confidence']:.3f}")
             print()
+<<<<<<< HEAD
+=======
+        
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         # Market sentiment summary
         summary = sentiment_analyzer.get_market_sentiment_summary(analyzed_news)
         print(f"Market Mood: {summary['market_mood']}")
         print(f"Risk Assessment: {summary['risk_assessment']}")
         print()
+<<<<<<< HEAD
     except Exception as e:
         print(f"❌ Sentiment analysis failed: {e}")
         assert False
@@ -49,6 +72,22 @@ def test_ai_models():
         llm_analyzer = FreeLLMAnalyzer()
         # Test with first article
         sample_text = f"{sample_news[0]['title']} {sample_news[0]['description']}"
+=======
+        
+    except Exception as e:
+        print(f"❌ Sentiment analysis failed: {e}")
+        return False
+    
+    # Test LLM analyzer
+    print("Testing Free LLM Analyzer...")
+    
+    try:
+        llm_analyzer = FreeLLMAnalyzer()
+        
+        # Test with first article
+        sample_text = f"{sample_news[0]['title']} {sample_news[0]['description']}"
+        
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         # Risk analysis
         risk_analysis = llm_analyzer.analyze_text_with_qa(sample_text, 'risk_analysis')
         print("✅ Risk Analysis Results:")
@@ -57,6 +96,7 @@ def test_ai_models():
                 print(f"   Q: {question}")
                 print(f"   A: {answer['answer']} (confidence: {answer['confidence']:.3f})")
                 print()
+<<<<<<< HEAD
         # Entity extraction
         entities = llm_analyzer.extract_key_entities(sample_text)
         print("✅ Entity Extraction Results:")
@@ -74,3 +114,31 @@ def test_ai_models():
 
 if __name__ == "__main__":
     test_ai_models()
+=======
+        
+        # Entity extraction
+        entities = llm_analyzer.extract_key_entities(sample_text)
+        print("✅ Entity Extraction Results:")
+        for entity_type, values in entities.items():
+           if values:
+               print(f"   {entity_type}: {values}")
+        print()
+       
+       # Generate risk summary
+        risk_summary = llm_analyzer.generate_risk_summary(sample_news)
+        print("✅ Risk Summary:")
+        print(f"   Urgency: {risk_summary['urgency_assessment']}")
+        print(f"   Key Themes: {risk_summary.get('key_themes', {})}")
+        print(f"   Recommendations: {risk_summary.get('recommendations', [])}")
+        print()
+       
+    except Exception as e:
+        print(f"❌ LLM analysis failed: {e}")
+        return False
+   
+    print("✅ All AI model tests passed!")
+    return True
+
+if __name__ == "__main__":
+   test_ai_models()
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)

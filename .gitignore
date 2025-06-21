@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+=======
+# .gitignore for financial-risk-intelligence
+
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
+<<<<<<< HEAD
 # C extensions
 *.so
 
@@ -59,8 +65,52 @@ cython_debug/
 venv/
 .venv/
 .env
+=======
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Data files
+data/raw/
+data/processed/
+data/models/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Streamlit cache
+.streamlit/
+
+# VS Code settings
+.vscode/
+
+# Test outputs
+*.log
+*.tmp
+
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 data/raw/*
 !data/raw/.gitkeep
 .DS_Store
 *.log
+<<<<<<< HEAD
 .streamlit/
+=======
+.streamlit/
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)

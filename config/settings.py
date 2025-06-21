@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# config/settings.py
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import os
 from dotenv import load_dotenv
 
@@ -25,6 +29,7 @@ class Config:
     # Cache settings
     CACHE_DURATION_HOURS = 1
     
+<<<<<<< HEAD
     # Monitoring thresholds and intervals (user-editable)
     NEWS_CHECK_INTERVAL_MIN = int(os.getenv('NEWS_CHECK_INTERVAL_MIN', 30))
     MARKET_CHECK_INTERVAL_MIN = int(os.getenv('MARKET_CHECK_INTERVAL_MIN', 5))
@@ -52,6 +57,8 @@ class Config:
         'Energy': ['oil', 'gas', 'energy', 'renewable', 'solar', 'wind']
     }
     
+=======
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
     @classmethod
     def validate_keys(cls):
         missing_keys = []
@@ -63,4 +70,8 @@ class Config:
         if missing_keys:
             raise ValueError(f"Missing API keys: {missing_keys}")
         
+<<<<<<< HEAD
         return True
+=======
+        return True
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)

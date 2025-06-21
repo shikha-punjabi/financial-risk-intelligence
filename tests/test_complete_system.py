@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# tests/test_complete_system.py
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
 import time
 import threading
 from datetime import datetime
@@ -30,6 +34,7 @@ def test_complete_system():
         # Start monitoring
         agent.start_monitoring()
         print("✅ Monitoring started")
+<<<<<<< HEAD
 
         # Force immediate data collection
         print("Forcing immediate data collection...")
@@ -37,6 +42,9 @@ def test_complete_system():
         agent._check_market_risks()
         agent._check_economic_risks()
 
+=======
+        
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
         # Wait for some monitoring cycles
         print("⏳ Running monitoring for 2 minutes...")
         time.sleep(120)  # 2 minutes
@@ -65,6 +73,7 @@ def test_complete_system():
         print("✅ Monitoring stopped")
         
         print("\n🎉 Complete system test passed!")
+<<<<<<< HEAD
         assert True
         
     except Exception as e:
@@ -73,3 +82,13 @@ def test_complete_system():
 
 if __name__ == "__main__":
     test_complete_system()
+=======
+        return True
+        
+    except Exception as e:
+        print(f"❌ System test failed: {e}")
+        return False
+
+if __name__ == "__main__":
+    test_complete_system()
+>>>>>>> c3a7bb2 (Initial commit: AI-powered financial risk intelligence platform)
